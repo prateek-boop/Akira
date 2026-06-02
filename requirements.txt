@@ -1,0 +1,18 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+faiss-cpu
+numpy
+pypdf
+sentence-transformers
+PyYAML
+requests
+beautifulsoup4
+torch
+transformers
+psutil
+huggingface_hub
+accelerate
+selenium
+rank-bm25
+fastapi
+uvicorn
+python-multipart

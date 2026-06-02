@@ -1,0 +1,15 @@
+
+start error
+
+  X11 display failed! Is Xvfb installed? 
+  Try this: `sudo apt install -y xvfb`
+Opening LinkedIn post...
+
+start error
+
+X11 display failed! Will use regular xvfb!
+Expanding comments section...
+
+Loading all comments (targeting 554 comments)...
+This may take several minutes...
+

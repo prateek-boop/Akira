@@ -1,0 +1,8 @@
+__pycache__/
+venv/
+.env
+index_store/
+scrapping-main/dorking/db.sqlite3
+scrapping-main/dorking/results.json
+*.pyc
+.git/

@@ -1,0 +1,17 @@
+[
+  {
+    "query": "site:example.com filetype:pdf",
+    "description": "Find PDF files on example.com",
+    "is_active": true
+  },
+  {
+    "query": "intitle:\"index of\" inurl:admin",
+    "description": "Find directory listings in admin areas",
+    "is_active": true
+  },
+  {
+    "query": "filetype:sql \"MySQL dump\"",
+    "description": "Find MySQL database dumps",
+    "is_active": false
+  }
+]

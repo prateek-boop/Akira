@@ -1,0 +1,16 @@
+services:
+  akira-rag:
+    build: .
+    container_name: akira_chatbot
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./index_store:/app/index_store
+    env_file:
+      - .env
+    stdin_open: true # Allows interactive input
+    tty: true        # Allows interactive input
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+    restart: no

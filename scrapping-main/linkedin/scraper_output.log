@@ -1,0 +1,180 @@
+Starting scraper in visible mode...
+Target URL: https://www.linkedin.com/posts/sde-jobs-and-internships_referral-alert-batch-202320242025-activity-7391139255512850432-jlG-
+Traceback (most recent call last):
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/seleniumbase/core/browser_launcher.py", line 5566, in get_local_driver
+    driver = undetected.Chrome(
+        options=chrome_options,
+    ...<6 lines>...
+        use_subprocess=True,  # Always!
+    )
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/seleniumbase/undetected/__init__.py", line 324, in __init__
+    super().__init__(options=options, service=service_)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/chrome/webdriver.py", line 47, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        browser_name=DesiredCapabilities.CHROME["browserName"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        keep_alive=keep_alive,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/chromium/webdriver.py", line 71, in __init__
+    super().__init__(command_executor=executor, options=options)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/remote/webdriver.py", line 263, in __init__
+    self.start_session(capabilities)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/seleniumbase/undetected/__init__.py", line 554, in start_session
+    super().start_session(capabilities)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/remote/webdriver.py", line 366, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/remote/webdriver.py", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/remote/errorhandler.py", line 233, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: cannot connect to chrome at 127.0.0.1:58577
+from chrome not reachable; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+#0 0x55a3dfd968ef <unknown>
+#1 0x55a3df7b28fc <unknown>
+#2 0x55a3df79ee8b <unknown>
+#3 0x55a3df7f4872 <unknown>
+#4 0x55a3df7ea0d8 <unknown>
+#5 0x55a3df83f6d6 <unknown>
+#6 0x55a3df83ee03 <unknown>
+#7 0x55a3df82f2e3 <unknown>
+#8 0x55a3df7f8ee1 <unknown>
+#9 0x55a3df7f9c12 <unknown>
+#10 0x55a3dfd5fe7e <unknown>
+#11 0x55a3dfd63457 <unknown>
+#12 0x55a3dfd62eaa <unknown>
+#13 0x55a3dfd638f5 <unknown>
+#14 0x55a3dfd4bbf3 <unknown>
+#15 0x55a3dfd63d04 <unknown>
+#16 0x55a3dfd349ec <unknown>
+#17 0x55a3dfd82287 <unknown>
+#18 0x55a3dfd824e6 <unknown>
+#19 0x55a3dfd954f3 <unknown>
+#20 0x7fce372969cb <unknown>
+#21 0x7fce3731aa0c <unknown>
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/sonu/Desktop/linkedin/manage.py", line 22, in <module>
+    main()
+    ~~~~^^
+  File "/home/sonu/Desktop/linkedin/manage.py", line 18, in main
+    execute_from_command_line(sys.argv)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/django/core/management/__init__.py", line 442, in execute_from_command_line
+    utility.execute()
+    ~~~~~~~~~~~~~~~^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/django/core/management/__init__.py", line 436, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/django/core/management/base.py", line 416, in run_from_argv
+    self.execute(*args, **cmd_options)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/django/core/management/base.py", line 460, in execute
+    output = self.handle(*args, **options)
+  File "/home/sonu/Desktop/linkedin/contacts/management/commands/scrape_linkedin.py", line 37, in handle
+    with SB(uc=True, headless=True, user_data_dir=profile_dir,
+         ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            xvfb=False) as sb:
+            ^^^^^^^^^^^
+  File "/usr/lib/python3.13/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/seleniumbase/plugins/sb_manager.py", line 1401, in SB
+    sb.setUp()
+    ~~~~~~~~^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/seleniumbase/fixtures/base_case.py", line 15762, in setUp
+    self.driver = self.get_new_driver(
+                  ~~~~~~~~~~~~~~~~~~~^
+        browser=self.browser,
+        ^^^^^^^^^^^^^^^^^^^^^
+    ...<54 lines>...
+        d_p_r=self.__device_pixel_ratio,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/seleniumbase/fixtures/base_case.py", line 4317, in get_new_driver
+    new_driver = browser_launcher.get_driver(
+        browser_name=browser_name,
+    ...<56 lines>...
+        browser=browser_name,
+    )
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/seleniumbase/core/browser_launcher.py", line 3446, in get_driver
+    return get_local_driver(
+        browser_name,
+    ...<53 lines>...
+        device_pixel_ratio,
+    )
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/seleniumbase/core/browser_launcher.py", line 5590, in get_local_driver
+    driver = undetected.Chrome(
+        options=chrome_options,
+    ...<6 lines>...
+        use_subprocess=True,  # Always!
+    )
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/seleniumbase/undetected/__init__.py", line 324, in __init__
+    super().__init__(options=options, service=service_)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/chrome/webdriver.py", line 47, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        browser_name=DesiredCapabilities.CHROME["browserName"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        keep_alive=keep_alive,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/chromium/webdriver.py", line 71, in __init__
+    super().__init__(command_executor=executor, options=options)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/remote/webdriver.py", line 263, in __init__
+    self.start_session(capabilities)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/seleniumbase/undetected/__init__.py", line 554, in start_session
+    super().start_session(capabilities)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/remote/webdriver.py", line 366, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/remote/webdriver.py", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/sonu/Desktop/linkedin/venv/lib/python3.13/site-packages/selenium/webdriver/remote/errorhandler.py", line 233, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: cannot connect to chrome at 127.0.0.1:58577
+from chrome not reachable; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+#0 0x56309db1e8ef <unknown>
+#1 0x56309d53a8fc <unknown>
+#2 0x56309d526e8b <unknown>
+#3 0x56309d57c872 <unknown>
+#4 0x56309d5720d8 <unknown>
+#5 0x56309d5c76d6 <unknown>
+#6 0x56309d5c6e03 <unknown>
+#7 0x56309d5b72e3 <unknown>
+#8 0x56309d580ee1 <unknown>
+#9 0x56309d581c12 <unknown>
+#10 0x56309dae7e7e <unknown>
+#11 0x56309daeb457 <unknown>
+#12 0x56309daeaeaa <unknown>
+#13 0x56309daeb8f5 <unknown>
+#14 0x56309dad3bf3 <unknown>
+#15 0x56309daebd04 <unknown>
+#16 0x56309dabc9ec <unknown>
+#17 0x56309db0a287 <unknown>
+#18 0x56309db0a4e6 <unknown>
+#19 0x56309db1d4f3 <unknown>
+#20 0x7f2c232969cb <unknown>
+#21 0x7f2c2331aa0c <unknown>
+

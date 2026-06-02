@@ -1,0 +1,26 @@
+======================================================================
+LinkedIn Email Scraper - Fast Mode
+Target: https://www.linkedin.com/posts/sde-jobs-and-internships_referral-alert-batch-202320242025-activity-7391139255512850432-jlG-
+======================================================================
+➤ Opening LinkedIn post...
+➤ Loading ALL comments (this may take time)...
+  ✓ Clicks: 10 | Emails in DB: 416
+  ✓ Clicks: 20 | Emails in DB: 416
+  ✓ Clicks: 30 | Emails in DB: 416
+  ✓ Clicks: 40 | Emails in DB: 416
+
+✓ Total button clicks: 41
+➤ Final scroll pass...
+➤ Final extraction...
+
+======================================================================
+✓ Found 402 unique emails
+======================================================================
+
+======================================================================
+SCRAPING COMPLETE
+======================================================================
+  ✓ New emails added:     0
+  ✓ Already in database:  402
+  ✓ Total in database:    416
+======================================================================
