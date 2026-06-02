@@ -439,7 +439,7 @@ def smoke_test(
     index: faiss.Index,
     chunks: list[dict],
     model: SentenceTransformer,
-    query: str = "What are the key skills for data engineering?",
+    query: str = "What are the property prices in Dubai?",
     top_k: int = 3,
 ) -> None:
     log.info("── Smoke test ──────────────────────────────────────")

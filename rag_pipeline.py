@@ -1,14 +1,14 @@
 """
 rag_pipeline.py  —  Akira: UAE Real Estate & Land Intelligence
 =========================================================
-Hybrid RAG: FAISS retrieval + Dorking property signals + 
+Hybrid RAG: FAISS retrieval + Akira property signals + 
 CSV transaction records + Gemma-3 LLM answer generation.
 
 Usage
 -----
     python rag_pipeline.py
     python rag_pipeline.py --index-dir ./index_store --log-level DEBUG
-    python rag_pipeline.py --query "Is MLOps in demand?" --no-interactive
+    python rag_pipeline.py --query "How is the real estate market in Dubai Marina?" --no-interactive
 
 Environment Variables
 ---------------------
@@ -119,13 +119,13 @@ class RAGConfig:
 
     # Scrapers
     scrapers_root: Path = field(default_factory=lambda: Path(__file__).parent / "scrapping-main")
-    dorking_db:    Path = field(default_factory=lambda: Path(__file__).parent / "scrapping-main" / "dorking" / "db.sqlite3")
-    dorking_path:  Path = field(default_factory=lambda: Path(__file__).parent / "scrapping-main" / "dorking" / "results.json")
+    akira_db:      Path = field(default_factory=lambda: Path(__file__).parent / "scrapping-main" / "akira" / "db.sqlite3")
+    akira_path:    Path = field(default_factory=lambda: Path(__file__).parent / "scrapping-main" / "akira" / "results.json")
     
     # Cache
     cache_path:    Path = field(default_factory=lambda: Path(__file__).parent / "index_store" / "query_cache.json")
     
-    dorking_top_n:  int = 5
+    akira_top_n:  int = 5
 
     def validate(self) -> None:
         if self.top_k < 1:
@@ -176,10 +176,10 @@ class ScraperBridge:
     def __init__(self, cfg: RAGConfig):
         self.cfg = cfg
 
-    def search_dorking(self, query: str) -> list[dict]:
-        if not self.cfg.dorking_db.exists(): return []
+    def search_akira(self, query: str) -> list[dict]:
+        if not self.cfg.akira_db.exists(): return []
         try:
-            conn = sqlite3.connect(self.cfg.dorking_db)
+            conn = sqlite3.connect(self.cfg.akira_db)
             cursor = conn.cursor()
             # Filter words to focus on property-related keywords
             words = [f"%{w}%" for w in query.split() if len(w) > 2]
@@ -190,7 +190,7 @@ class ScraperBridge:
             params = []
             for w in words: params.extend([w, w])
             
-            cursor.execute(sql + f" LIMIT {self.cfg.dorking_top_n}", params)
+            cursor.execute(sql + f" LIMIT {self.cfg.akira_top_n}", params)
             results = [{"title": r[0], "url": r[1], "snippet": r[2], "source": "Web (Real Estate)"} for r in cursor.fetchall()]
             conn.close()
             return results
@@ -199,11 +199,11 @@ class ScraperBridge:
             return []
 
     def get_hybrid_context(self, query: str) -> str:
-        dorking = self.search_dorking(query)
+        akira_results = self.search_akira(query)
         
         sections = []
-        if dorking:
-            sec = "LIVE PROPERTY SIGNALS (from Web Search):\n" + "\n".join([f"- {r['title']} ({r['url']}): {r['snippet'][:200]}..." for r in dorking])
+        if akira_results:
+            sec = "LIVE PROPERTY SIGNALS (from Web Search):\n" + "\n".join([f"- {r['title']} ({r['url']}): {r['snippet'][:200]}..." for r in akira_results])
             sections.append(sec)
         
         return "\n\n".join(sections)
@@ -468,20 +468,16 @@ def retrieve(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# DORKING BRIDGE
+# AKIRA BRIDGE
 # ─────────────────────────────────────────────────────────────────────────────
 
-_EDU_DOMAINS = [
-    "coursera", "udemy", "youtube", "deeplearning", "kaggle",
-    "mit", "stanford", "github", "edx", "datacamp", "codecademy",
-]
 
 
-def get_dorking_context(query: str, cfg: RAGConfig) -> tuple[str, list[tuple]]:
-    if not cfg.dorking_path.exists():
+def get_akira_context(query: str, cfg: RAGConfig) -> tuple[str, list[tuple]]:
+    if not cfg.akira_path.exists():
         return "", []
     try:
-        data = json.loads(cfg.dorking_path.read_text(encoding="utf-8"))
+        data = json.loads(cfg.akira_path.read_text(encoding="utf-8"))
     except Exception:
         return "", []
 
@@ -492,7 +488,7 @@ def get_dorking_context(query: str, cfg: RAGConfig) -> tuple[str, list[tuple]]:
         overlap = len(query_words & set(entry.get("query", "").lower().split()))
         if overlap == 0:
             continue
-        for link in entry.get("links", [])[:cfg.dorking_top_n]:
+        for link in entry.get("links", [])[:cfg.akira_top_n]:
             title   = link.get("title", "")
             url     = link.get("url", "")
             snippet = link.get("snippet", "")
@@ -503,7 +499,7 @@ def get_dorking_context(query: str, cfg: RAGConfig) -> tuple[str, list[tuple]]:
     seen: set[str] = set()
     top_links: list[tuple] = []
     for _, title, url, snippet in scored:
-        if url not in seen and len(top_links) < cfg.dorking_top_n:
+        if url not in seen and len(top_links) < cfg.akira_top_n:
             seen.add(url)
             top_links.append((title, url, snippet))
 
@@ -767,7 +763,7 @@ def process_query(
     hybrid_context = bridge.get_hybrid_context(query)
     
     # Also get web sources for references display
-    _, web_sources = get_dorking_context(query, cfg)
+    _, web_sources = get_akira_context(query, cfg)
 
     # Step 3: Build prompt
     prompt = format_prompt(query, context_items, hybrid_context=hybrid_context, history=history)
@@ -795,7 +791,7 @@ def process_query(
                 print(" ", s)
         print("--------------------------")
         if web_sources:
-            print("\n📌 REFERENCES  (Dorking sources)")
+            print("\n📌 REFERENCES  (Akira sources)")
             print("─" * 58)
             for i, (title, url, _) in enumerate(web_sources, 1):
                 print(f"  [{i}] {title}")
@@ -877,7 +873,7 @@ def run_interactive(
     print("  ██║  ██║██╔══╝  ██║╚██╔╝██║██╔══██║██║╚████║██║  ██║ ██╔██╗ ")
     print("  ██████╔╝███████╗██║ ╚═╝ ██║██║  ██║██║ ╚███║██████╔╝██╔╝ ██╗")
     print("  ╚═════╝ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚══╝╚═════╝ ╚═╝  ╚═╝")
-    print(f"  Hybrid RAG · Dorking · Real Estate Signals   v1.1  |  index: {cfg.index_dir}")
+    print(f"  Hybrid RAG · Akira · Real Estate Signals   v1.1  |  index: {cfg.index_dir}")
     print("═" * W)
     print("  Your personal UAE Real Estate Partner.  Commands: exit | quit | /reload")
     print("═" * W + "\n")

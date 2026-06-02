@@ -7,7 +7,7 @@ Akira is a production-grade Hybrid RAG (Retrieval-Augmented Generation) system d
 *   **Hybrid Retrieval:** Combines Dense (FAISS/SentenceTransformers) and Sparse (BM25) search for maximum accuracy.
 *   **Granular Ingestion:** Specialized loaders for large CSV property catalogs (16,000+ records) and PDF market reports.
 *   **Intelligence Engine:** Powered by Google's **Gemma-3-1B/4B** models for human-like conversational analysis.
-*   **Live Signals:** Integrated "Dorking" bridge to pull recent property signals from SQLite databases.
+*   **Live Signals:** Integrated "Akira" bridge to pull recent property signals from SQLite databases.
 *   **Production API:** Robust FastAPI backend with session history and query caching.
 *   **Dockerized:** Fully containerized setup for consistent deployment.
 
